@@ -30,5 +30,11 @@ class loginPage:
         assert "Logged in" in loggedIn and "Logout" in logout
         print("Successfully logged in.")
 
+    def logout(self):
+        self.driver.find_element(*self.logoutButton).click()
+        print("Successfully logged out.")
+        time.sleep(1)
+
+
 
 

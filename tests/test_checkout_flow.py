@@ -5,6 +5,8 @@ def test_purchaseFlow(browserInstance):
 
     driver = browserInstance
 
-    login = loginPage(driver)
-    login.login()
-    login.validateLogin()
+    loginLogout = loginPage(driver)
+    loginLogout.login()
+    loginLogout.validateLogin()
+
+    loginLogout.logout()
