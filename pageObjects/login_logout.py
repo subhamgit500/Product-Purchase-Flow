@@ -14,6 +14,19 @@ class loginPage:
         self.loggedIn = (By.XPATH,"//div[@class='shop-menu pull-right']/ul/li[10]/a")
         self.logoutButton = (By.XPATH,"//div[@class='shop-menu pull-right']/ul/li[4]/a")
 
+    def verify_homepage_title_and_URL(self):
+
+        title = self.driver.title
+        getURL = self.driver.current_url
+        print(f"Title of the home page is {title}")
+        print(f"Url is {getURL}")
+
+        #Verification
+        assert title == "Automation Exercise"
+        print("Title verified successfully.")
+        assert "https://automationexercise.com/" in getURL
+        print("URL verified successfully.")
+
     def login(self):
         self.driver.find_element(*self.signUploginButton).click()    #click Login/Signup button
         time.sleep(1)
