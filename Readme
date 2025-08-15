@@ -1,0 +1,78 @@
+“mega test case” on https://automationexercise.com/ that:
+
+- Starts with Login
+- Covers almost all Selenium concepts (like locators, waits, dropdowns, mouse actions, JS execution, alerts, scrolling, switching tabs, file upload, etc.)
+- Ends with Logout
+
+
+
+Test Case: End-to-End Automation on automationexercise.com
+
+Test Steps:-
+
+Part 1 – Pre-Login Setup
+
+Open Chrome browser.
+Navigate to https://automationexercise.com/.
+Verify the homepage title and URL.
+Scroll to make sure the page loads fully.
+
+Part 2 – Login
+
+Click on Signup / Login button.
+Enter registered email and password (from config).
+Click Login button.
+Verify Logged in as username is displayed.
+
+Part 3 – Product Browsing
+
+Click Products link.
+Search for a product (e.g., "Dress").
+Apply filters (categories, price, brand).
+Scroll and select a product.
+Switch to product detail page (verify price, description, image).
+
+Part 4 – Cart & Checkout
+
+Add product to cart (verify popup message).
+Click View Cart.
+Update product quantity.
+Remove product and re-add to cart.
+Proceed to checkout.
+Verify billing address.
+
+Part 5 – Form Handling
+
+Navigate to Contact Us page.
+Fill out the contact form (name, email, subject, message).
+Upload a file (use Selenium file upload).
+Submit and verify success message.
+
+Part 6 – Misc Selenium Features
+
+Perform mouse hover on a menu (Actions class).
+Execute JavaScript to highlight an element.
+Handle alert box (if any).
+Open a new tab (using JS or Ctrl+T) and switch back.
+
+Part 7 – Logout
+
+Click Logout link.
+Verify login page is displayed.
+Close the browser.
+
+
+
+
+Selenium Concepts Covered:-
+
+Locators: ID, name, XPATH, CSS Selector, link text, partial link text
+Waits: Implicit, explicit
+Actions class: Hover, click, drag-drop (if applicable)
+JavaScript execution: Scroll, highlight
+Window handling: Switching tabs/windows
+File upload
+Alerts handling
+Assertions & validations
+Form handling
+Screenshots
