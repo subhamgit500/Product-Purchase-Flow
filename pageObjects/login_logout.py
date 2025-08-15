@@ -42,6 +42,8 @@ class loginPage:
         print(f"{logout} button is visible.")
         assert "Logged in" in loggedIn and "Logout" in logout
         print("Successfully logged in.")
+        self.driver.execute_script("window.scrollTo(0,500)")
+        print("Page loaded successfully.")
 
     def logout(self):
         self.driver.find_element(*self.logoutButton).click()

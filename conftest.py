@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from selenium import webdriver
 
@@ -26,6 +28,7 @@ def browserInstance(request):
         driver = webdriver.Edge(options=edgeOption)
 
     driver.get("https://automationexercise.com/")
+    time.sleep(2)
     driver.implicitly_wait(4)
     yield driver
     driver.close()
