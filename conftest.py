@@ -28,7 +28,7 @@ def browserInstance(request):
         driver = webdriver.Edge(options=edgeOption)
 
     driver.get("https://automationexercise.com/")
-    time.sleep(2)
+    time.sleep(1)
     driver.implicitly_wait(4)
     yield driver
     driver.close()

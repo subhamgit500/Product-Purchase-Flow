@@ -2,6 +2,8 @@ import time
 
 from selenium.webdriver.common.by import By
 
+from pageObjects.product_page import ProductPage
+
 
 class loginPage:
 
@@ -26,26 +28,32 @@ class loginPage:
         print("Title verified successfully.")
         assert "https://automationexercise.com/" in getURL
         print("URL verified successfully.")
-        time.sleep(2)
-        self.driver.execute_script("window.scrollTo(0,500)")
+        time.sleep(1)
+        #scroll to verify page loaded fully
+        self.driver.execute_script("window.scrollTo(0,1000)")
         print("Page loaded successfully.")
-        time.sleep(2)
+        time.sleep(1)
 
     def login(self,username,password):
         self.driver.find_element(*self.signUploginButton).click()    #click Login/Signup button
         time.sleep(1)
+        #Enter registered email and password (from config).
         self.driver.find_element(*self.email).send_keys(username)
         self.driver.find_element(*self.password).send_keys(password)
         self.driver.find_element(*self.loginButton).click()
-        time.sleep(2)
+        time.sleep(1)
 
     def validateLogin(self):
         loggedIn = self.driver.find_element(*self.loggedIn).text
         logout = self.driver.find_element(*self.logoutButton).text
         print(loggedIn)
         print(f"{logout} button is visible.")
+        #Verify Logged in as username is displayed.
         assert "Logged in" in loggedIn and "Logout" in logout
         print("Successfully logged in.")
+
+        retunObject = ProductPage(self.driver)
+        return retunObject
 
 
 
