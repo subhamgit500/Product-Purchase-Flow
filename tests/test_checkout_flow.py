@@ -20,3 +20,4 @@ def test_purchaseFlow(browserInstance,test_data_item):
     loginLogout.validateLogin()
 
     loginLogout.logout()
+    print("Logout done.")
