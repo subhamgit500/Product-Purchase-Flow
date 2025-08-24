@@ -31,11 +31,11 @@ class loginPage:
         print("Page loaded successfully.")
         time.sleep(2)
 
-    def login(self):
+    def login(self,username,password):
         self.driver.find_element(*self.signUploginButton).click()    #click Login/Signup button
         time.sleep(1)
-        self.driver.find_element(*self.email).send_keys("johncena777@gmail.com")
-        self.driver.find_element(*self.password).send_keys("JohnJohnCena@123")
+        self.driver.find_element(*self.email).send_keys(username)
+        self.driver.find_element(*self.password).send_keys(password)
         self.driver.find_element(*self.loginButton).click()
         time.sleep(2)
 
