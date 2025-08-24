@@ -7,6 +7,13 @@
     "product_to_search" : "Dress",
     "category" : "Women",
     "product_category" : "Dress"
+      },
+      {
+    "username" : "johncena777@gmail.com",
+    "password" : "JohnJohnCena@123",
+    "product_to_search" : "Dress",
+    "category" : "Men",
+    "product_category" : "Jeans"
       }
   ]
 }

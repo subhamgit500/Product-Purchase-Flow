@@ -1,0 +1,15 @@
+INFO     test_checkout_flow:test_checkout_flow.py:33 
+Step 1: Verify Homepage
+
+INFO     test_checkout_flow:test_checkout_flow.py:37 
+Step 2: Perform Login
+
+INFO     test_checkout_flow:test_checkout_flow.py:40 
+Step 3: Verify Login
+
+INFO     test_checkout_flow:test_checkout_flow.py:45 
+Step 4: Select Product
+
+INFO     test_checkout_flow:test_checkout_flow.py:50 
+Step 5: Perform Logout
+

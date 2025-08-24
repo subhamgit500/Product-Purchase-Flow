@@ -1,0 +1,443 @@
+Quick Notes of Selenium Python 
+
+ 
+
+Ways to Use Half / Partial Attribute Value in XPath 
+
+contains() 
+
+When the attribute contains the text anywhere. 
+
+//input[contains(@id, 'username')] 
+
+✅ Matches: 
+
+starts-with() 
+
+When the attribute starts with given text. 
+
+//button[starts-with(@name, 'submit')] 
+
+✅ Matches: 
+
+Passing variables into locators is very common in Selenium when your element changes dynamically (like username, product name, row number, etc.). 
+
+Using f-strings (Recommended, Python 3.6+) username = "John" element = driver.find_element(By.XPATH, f"//input[@value='{username}']") 
+
+👉 Here {username} gets replaced dynamically. 
+
+🔹 2. Using format() username = "John" element = driver.find_element(By.XPATH, "//input[@value='{}']".format(username)) 
+
+🔹 3. Using concatenation (not clean, but works) username = "John" xpath = "//input[@value='" + username + "']" element = driver.find_element(By.XPATH, xpath) 
+
+🔹 Example in Selenium Test from selenium import webdriver from selenium.webdriver.common.by import By 
+
+driver = webdriver.Chrome() 
+
+driver.get("https://example.com") 
+
+product_name = "Laptop" element = driver.find_element(By.XPATH, f"//div[text()='{product_name}']") element.click() 
+
+⚡ Best Practice for Selenium + Python: ➡ Always use f-strings — they are clean, readable, and avoid errors. 
+
+Scrolling is very important in Selenium because sometimes the element is not visible in the viewport, and Selenium cannot click/type until it’s visible. 
+
+Here are the common ways to scroll to a specific element: 
+
+🔹 1. Using element.location_once_scrolled_into_view 
+
+This scrolls automatically to bring the element into view. 
+
+element = driver.find_element(By.XPATH, "//h2[contains(text(),'Best Sellers')]") element.location_once_scrolled_into_view 
+
+✅ Pros: Simple ❌ Cons: Sometimes jerky or doesn’t work smoothly in all browsers. 
+
+🔹 2. Using JavaScript scrollIntoView() 
+
+This is the most reliable way. 
+
+element = driver.find_element(By.XPATH, "//h2[contains(text(),'Best Sellers')]") driver.execute_script("arguments[0].scrollIntoView(true);", element) 
+
+true → Aligns the element at the top of the page. 
+
+false → Aligns at the bottom of the page. 
+
+🔹 3. Using JavaScript by coordinates 
+
+Scroll by element’s Y position. 
+
+element = driver.find_element(By.XPATH, "//h2[contains(text(),'Best Sellers')]") driver.execute_script("window.scrollTo(0, arguments[0].location['y']);", element) 
+
+🔹 4. Using ActionChains (less common) from selenium.webdriver.common.action_chains import ActionChains 
+
+element = driver.find_element(By.XPATH, "//h2[contains(text(),'Best Sellers')]") ActionChains(driver).move_to_element(element).perform() 
+
+✅ Works for hover as well. ❌ Sometimes doesn’t fully scroll if sticky headers overlap. 
+
+⚡ Best Practice: Use scrollIntoView() → most stable, especially when element is dynamic. 
+
+Great question 👍 — this is one of the most important XPath tricks in Selenium. 
+
+Let’s break it step by step. 
+
+🔹 Scenario 
+
+Suppose you have this HTML: 
+
+First Child Second Child  
+
+Now, imagine you already located child1, and from there you want to go to child2. 
+
+🔹 XPath Axis: parent:: and .. 
+
+.. → Go one level up (parent node). 
+
+parent::tagName → Go to parent explicitly. 
+
+From parent, you can go down again to another child. 
+
+✅ Example 1: Using .. (short form) //span[@class='child1']/../span[@class='child2'] 
+
+👉 Steps: 
+
+//span[@class='child1'] → Locate first child. 
+
+/.. → Move to parent  
+
+. 
+
+/span[@class='child2'] → From parent, move to second child. 
+
+✅ Example 2: Using parent:: //span[@class='child1']/parent::div/span[@class='child2'] 
+
+👉 Same as above, but more explicit. 
+
+✅ Example 3: Going multiple levels up 
+
+If structure is deeper: 
+
+First Second  
+
+XPath: 
+
+//span[@class='child1']/../../span[@class='child2'] 
+
+👉 /../.. moves two levels up. 
+
+⚡ Selenium Example 
+
+child1 = driver.find_element(By.XPATH, "//span[@class='child1']") child2 = driver.find_element(By.XPATH, "//span[@class='child1']/../span[@class='child2']") print(child2.text) # Second Child 
+
+✨ Tip: .. is faster to write, but parent:: is clearer if multiple parent levels exist. 
+
+ 
+
+ 
+
+ 
+
+<a href="/category_products/1" xpath="1">Dress </a> here I want to use text in xpath 
+
+ChatGPT said: 
+
+Perfect example 🚀 — let’s solve this. 
+
+You have: 
+
+<a href="/category_products/1" xpath="1">Dress </a> 
+ 
+
+ 
+
+✅ 1. Using exact text match 
+
+//a[text()='Dress '] 
+ 
+
+👉 Matches anchor tag with exact text (note the extra space in "Dress "). 
+
+ 
+
+✅ 2. Using normalize-space() (ignores extra spaces) 
+
+//a[normalize-space(text())='Dress'] 
+ 
+
+👉 More reliable, because it trims spaces before comparison. 
+
+ 
+
+✅ 3. Using contains() (when you only know part of text) 
+
+//a[contains(text(), 'Dress')] 
+ 
+
+👉 Matches <a>Dress </a>, <a>Evening Dress</a>, etc. 
+
+ 
+
+✅ 4. Case-insensitive (trick with translate()) 
+
+//a[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'dress')] 
+ 
+
+👉 Works even if the text is DRESS, dress, or Dress. 
+
+ 
+
+⚡ Selenium Example 
+
+element = driver.find_element(By.XPATH, "//a[normalize-space(text())='Dress']") 
+print(element.get_attribute("href"))   # /category_products/1 
+ 
+
+ 
+
+👉 Best practice: 
+
+Use normalize-space(text()) when text is fixed but spacing may vary. 
+
+Use contains(text(), '...') when text is partial or dynamic. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Suggested Improvements 
+1. Naming convention (PEP8) 
+ 
+Class names: ✅ already follow PascalCase (ProductPage, loginPage — though this one should be LoginPage). 
+ 
+Method names: should be snake_case, not CamelCase. 
+ 
+So: 
+ 
+product_page.SearchAndViewProduct(...)  ❌ 
+product_page.search_and_view_product(...)  ✅ 
+ 
+ 
+And class: 
+ 
+class loginPage:  ❌ 
+class LoginPage: ✅ 
+ 
+2. Responsibility of validateLogin() 
+ 
+Currently: 
+ 
+product_page = login_logout.validateLogin() 
+ 
+ 
+If validateLogin() both validates and returns a ProductPage object, that’s mixing 2 responsibilities. 
+👉 Suggestion: 
+ 
+Keep validate_login() only for validation. 
+ 
+Add a separate go_to_product_page() that explicitly returns ProductPage. 
+ 
+Example: 
+ 
+# login_logout.py 
+def validate_login(self): 
+    # assert username is displayed 
+    assert "Logged in as" in self.driver.page_source 
+ 
+def go_to_product_page(self): 
+    return ProductPage(self.driver) 
+ 
+ 
+Then your test becomes: 
+ 
+login_logout.validate_login() 
+product_page = login_logout.go_to_product_page() 
+ 
+ 
+Much clearer & SRP-compliant. 
+ 
+3. Test Readability / Step Logging 
+ 
+Instead of print, better use pytest's built-in logging (caplog) or Python’s logging library. 
+Example: 
+ 
+import logging 
+logger = logging.getLogger(__name__) 
+ 
+logger.info("Step 1: Verify Homepage") 
+ 
+ 
+This way, logs are collected in pytest reports. 
+ 
+4. Parametrize improvement 
+ 
+Currently: 
+ 
+@pytest.mark.parametrize("test_data_item", test_list) 
+ 
+ 
+✅ Works fine, but when test fails, it’s hard to see which dataset failed. 
+👉 Improvement: use ids in parametrize. 
+ 
+Example: 
+ 
+@pytest.mark.parametrize("test_data_item", test_list, ids=[f"User:{item['username']}" for item in test_list]) 
+ 
+ 
+This way test report will show: 
+ 
+test_purchaseFlow[User:john_doe] 
+test_purchaseFlow[User:jane_smith] 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+That logging.basicConfig(...) is the configuration that tells Python how your logs should appear and at what level (INFO, DEBUG, etc.). 
+
+There are 2 common ways to use it in your test framework: 
+
+ 
+
+✅ Option 1 – Put in conftest.py (Best Practice) 
+
+Since conftest.py is automatically picked up by pytest for the whole test suite, this ensures logging works across all tests without repeating config. 
+
+Example conftest.py: 
+
+import pytest 
+import logging 
+ 
+# Configure logging once for the whole test session 
+logging.basicConfig( 
+    level=logging.INFO, 
+    format="%(asctime)s [%(levelname)s] %(message)s", 
+    datefmt="%Y-%m-%d %H:%M:%S" 
+) 
+ 
+@pytest.fixture 
+def browserInstance(): 
+    # your webdriver setup here 
+    pass 
+ 
+
+Now, anywhere you use: 
+
+logger = logging.getLogger(__name__) 
+logger.info("Step 1: Verify Homepage") 
+ 
+
+you’ll see logs like: 
+
+2025-08-18 12:35:21 [INFO] Step 1: Verify Homepage 
+ 
+
+ 
+
+✅ Option 2 – Put in Your Test File (Only for That File) 
+
+If you don’t want it global, just put logging.basicConfig(...) at the top of your test file, before creating the logger: 
+
+import logging 
+ 
+logging.basicConfig( 
+    level=logging.INFO, 
+    format="%(asctime)s [%(levelname)s] %(message)s", 
+    datefmt="%Y-%m-%d %H:%M:%S" 
+) 
+ 
+logger = logging.getLogger(__name__) 
+ 
+
+ 
+
+⚡ Pro Tip 
+
+Use level=logging.DEBUG during debugging to get detailed logs. 
+
+In production, keep it INFO to avoid too much noise. 
+
+ 
+
+ 
+
+ 
+
+ok if I this in conftest py file then how I can use it everywhere, again and again I have to pass the fixture as pytest_configure or what ? 
+
+ChatGPT said: 
+
+Great question 👌 
+ No, you don’t need to pass pytest_configure as a fixture everywhere. 
+
+Here’s how it works: 
+
+ 
+
+🔹 Step 1: Put logging config in conftest.py 
+
+# conftest.py 
+import logging 
+ 
+def pytest_configure(config): 
+    logging.basicConfig( 
+        level=logging.INFO, 
+        format="%(asctime)s [%(levelname)s] %(message)s", 
+        datefmt="%Y-%m-%d %H:%M:%S", 
+    ) 
+ 
+
+This runs once automatically before any tests are collected. 
+ So logging is globally configured for your whole test suite. 
+
+ 
+
+🔹 Step 2: Use logger in any test file or page object 
+
+Anywhere in your framework, just do: 
+
+import logging 
+logger = logging.getLogger(__name__) 
+ 
+logger.info("Step 1: Verify Homepage") 
+logger.error("Something failed!") 
+ 
+
+You don’t need to call or import anything from conftest.py. 
+ The basicConfig you set up is global → every logging.getLogger() will pick it up. 
+
+ 
+
+🔹 Step 3: Run pytest with log output 
+
+python -m pytest --capture=tee-sys --log-cli-level=INFO --html=report.html 
+ 
+
+--log-cli-level=INFO → ensures logs appear in console & report. 
+
+--capture=tee-sys → ensures print() and logs are both shown. 
+
+ 
+
+✅ That’s it — now your whole framework is using centralized logging. 
+ You never need to repeat pytest_configure or fixtures for logging. 
+
+ 
+
+ 
