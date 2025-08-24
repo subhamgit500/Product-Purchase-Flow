@@ -52,10 +52,8 @@ class loginPage:
         assert "Logged in" in loggedIn and "Logout" in logout
         print("Successfully logged in.")
 
-        retunObject = ProductPage(self.driver)
-        return retunObject
-
-
+        # returnObject = ProductPage(self.driver)
+        # return returnObject
 
     def logout(self):
         self.driver.find_element(*self.logoutButton).click()

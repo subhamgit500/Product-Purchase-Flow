@@ -3,6 +3,7 @@ import json
 import pytest
 
 from pageObjects.login_logout import loginPage
+from pageObjects.product_page import ProductPage
 
 #retrive test data
 with open("C:\\PythonProject\\ProductPurchaseFlow\\utilities\\test_data.json") as file:
@@ -14,7 +15,6 @@ with open("C:\\PythonProject\\ProductPurchaseFlow\\utilities\\test_data.json") a
 def test_purchaseFlow(browserInstance,test_data_item):
 
     driver = browserInstance
-
     loginLogout = loginPage(driver)
 
     #Part 1 – Pre-Login Setup
@@ -22,12 +22,10 @@ def test_purchaseFlow(browserInstance,test_data_item):
 
     #Part 2 – Login
     loginLogout.login(test_data_item["username"],test_data_item["password"])
+    loginLogout.validateLogin()  # Verify Logged in as username is displayed.
 
-    #productpage will receive the instance of ProductPage class
-    ProductPage = loginLogout.validateLogin() #Verify Logged in as username is displayed.
-
-
-    ProductPage.SearchAndViewProduct()
-
-
+    #Part 3 – Product Browsing
+    #ProductPage will receive the instance of ProductPage class
+    productPage = ProductPage(driver,test_data_item["category"],test_data_item["product_category"])
+    productPage.SearchAndViewProduct(test_data_item["product_to_search"])
     loginLogout.logout()
