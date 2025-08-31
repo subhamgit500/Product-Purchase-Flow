@@ -40,6 +40,7 @@ def test_purchaseFlow(browserInstance,test_data_item):
     logger.info("\nStep 4: Select Product\n")
     product_page = login_logout.go_to_product_page()
     product_page.search_and_view_product(test_data_item["product_to_search"],test_data_item["category"],test_data_item["product_category"])
+    product_page.view_product_and_verify(test_data_item["item_to_select"],test_data_item["price_to_verify"])
 
     # Part 7 – Logout
     logger.info("\nStep 5: Perform Logout\n")

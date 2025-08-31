@@ -6,14 +6,18 @@
     "password" : "JohnJohnCena@123",
     "product_to_search" : "Dress",
     "category" : "Women",
-    "product_category" : "Dress"
+    "product_category" : "Dress",
+    "item_to_select" : "Stylish Dress",
+    "price_to_verify" : "1500"
       },
       {
     "username" : "johncena777@gmail.com",
     "password" : "JohnJohnCena@123",
     "product_to_search" : "Dress",
     "category" : "Men",
-    "product_category" : "Jeans"
+    "product_category" : "Jeans",
+    "item_to_select" : "Grunt Blue Slim Fit Jeans",
+    "price_to_verify" : "1400"
       }
   ]
 }

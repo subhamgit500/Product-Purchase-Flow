@@ -1,4 +1,5 @@
 import time
+from logging import exception
 from time import sleep
 
 from selenium.webdriver.common.by import By
@@ -42,3 +43,25 @@ class ProductPage:
         self.driver.execute_script("window.scrollTo(0,500)")
         time.sleep(1)
         logger.info(f"{str_product_category} selected successfully.")
+
+    def view_product_and_verify(self,item_to_select, price_to_verify):
+
+        item = self.driver.find_element(By.XPATH, f"//div[@class='product-image-wrapper']/div/div/p[text()='{item_to_select}']/../../../div[@class='choose']")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", item)
+        item.click()  # open product details page
+        logger.info(f"Successfully clicked on product : {item_to_select}.")
+
+        try:
+            # price verification
+            price = self.driver.find_element(By.XPATH, "//span/span")
+            assert price_to_verify in price.text, "Price did not match."
+            logger.info(f"Successfully verified price of the product.")
+
+        except Exception as e:
+            print(e)
+
+        finally:
+            # image Verification
+            image = self.driver.find_element(By.CSS_SELECTOR, "img[src*='picture']")  # it's common for all products
+            assert image.is_displayed(), "Image is not visible"
+            logger.info(f"Successfully verified product image.")
