@@ -8,7 +8,8 @@
     "category" : "Women",
     "product_category" : "Dress",
     "item_to_select" : "Stylish Dress",
-    "price_to_verify" : "1500"
+    "price_to_verify" : "1500",
+    "product_quantity" : "5"
       },
       {
     "username" : "johncena777@gmail.com",
@@ -17,7 +18,8 @@
     "category" : "Men",
     "product_category" : "Jeans",
     "item_to_select" : "Grunt Blue Slim Fit Jeans",
-    "price_to_verify" : "1400"
+    "price_to_verify" : "1400",
+    "product_quantity" : "7"
       }
   ]
 }

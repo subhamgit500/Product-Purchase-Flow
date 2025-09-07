@@ -4,6 +4,9 @@ from time import sleep
 
 from selenium.webdriver.common.by import By
 import logging
+
+from pageObjects.cart_page import CartPage
+
 logger = logging.getLogger(__name__)
 
 class ProductPage:
@@ -65,3 +68,6 @@ class ProductPage:
             image = self.driver.find_element(By.CSS_SELECTOR, "img[src*='picture']")  # it's common for all products
             assert image.is_displayed(), "Image is not visible"
             logger.info(f"Successfully verified product image.")
+
+    def go_to_cart_page(self):
+        return CartPage(self.driver)

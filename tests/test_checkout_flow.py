@@ -42,6 +42,14 @@ def test_purchaseFlow(browserInstance,test_data_item):
     product_page.search_and_view_product(test_data_item["product_to_search"],test_data_item["category"],test_data_item["product_category"])
     product_page.view_product_and_verify(test_data_item["item_to_select"],test_data_item["price_to_verify"])
 
+
+    # Part 4 – Cart & Checkout
+    logger.info("\nStep 5: Add product to cart\n")
+    cart_page = product_page.go_to_cart_page()
+    cart_page.add_to_cart_and_verify()
+    cart_page.remove_product_and_readd(test_data_item["product_quantity"])
+    cart_page.add_to_cart_and_verify()  # again after removing and updating quantity
+
     # Part 7 – Logout
     logger.info("\nStep 5: Perform Logout\n")
     login_logout.logout()
