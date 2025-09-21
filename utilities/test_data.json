@@ -2,14 +2,15 @@
   "data" :
   [
       {
-    "username" : "johncena777@gmail.com",
-    "password" : "JohnJohnCena@123",
+    "username" : "sydney.sweeny@baby.com",
+    "password" : "Test@12345",
     "product_to_search" : "Dress",
     "category" : "Women",
     "product_category" : "Dress",
     "item_to_select" : "Stylish Dress",
     "price_to_verify" : "1500",
-    "product_quantity" : "5"
+    "product_quantity" : "5",
+    "billing_address" : "42 Lavender Apartments, 5th Main Road"
       },
       {
     "username" : "johncena777@gmail.com",
@@ -19,7 +20,9 @@
     "product_category" : "Jeans",
     "item_to_select" : "Grunt Blue Slim Fit Jeans",
     "price_to_verify" : "1400",
-    "product_quantity" : "7"
+    "product_quantity" : "7",
+    "billing_address" : "Flat No. 203, Green Height Apartment"
+
       }
   ]
 }

@@ -3,17 +3,29 @@ import time
 from selenium.webdriver.common.by import By
 
 import logging
+
+from pageObjects.contact_us_page import ContactUs
+
+
 logger = logging.getLogger(__name__)
 
+
+
 class CartPage:
+
+    popup_element = (By.XPATH, "//div[@class='modal-content']")
+    item_added_message_element = (By.XPATH, "div/p[1]")
+    viewcart_popup_element = (By.XPATH, "div/p[2]")
+    remove_button_element = (By.CSS_SELECTOR, ".fa-times")
+    continue_shopping_element = (By.XPATH, "div[3]/button")
+    select_quantity_element = (By.ID, "quantity")
+    proceed_to_checkout_element = (By.CSS_SELECTOR, "a[class*='check_out']")
+    billing_address_element = (By.ID, "address_invoice")
+
+
     def __init__(self,driver):
         self.driver = driver
-        self.popup_element = (By.XPATH, "//div[@class='modal-content']")
-        self.item_added_message_element= (By.XPATH, "div/p[1]")
-        self.viewcart_popup_element = (By.XPATH, "div/p[2]")
-        self.remove_button_element = (By.CSS_SELECTOR, ".fa-times")
-        self.continue_shopping_element = (By.XPATH, "div[3]/button")
-        self.select_quantity_element = (By.ID, "quantity")
+
 
     def add_to_cart_and_verify(self):
 
@@ -32,7 +44,7 @@ class CartPage:
         viewcart_popup.find_element(*self.viewcart_popup_element).click()
         time.sleep(2)
 
-    def remove_product_and_readd(self,product_quantity):
+    def remove_product_and_re_add(self,product_quantity):
 
         # remove all products from cart if
         remove_buttons = self.driver.find_elements(*self.remove_button_element)
@@ -57,3 +69,23 @@ class CartPage:
         select_quantity.send_keys(product_quantity)
         time.sleep(1)
         logger.info("Successfully product quantity updated.")
+
+    def click_proceed_to_checkout(self):
+
+        #click on Proceed To Checkout button
+        proceed_to_checkout = self.driver.find_element(*self.proceed_to_checkout_element)
+        if proceed_to_checkout.is_displayed():
+            proceed_to_checkout.click()
+            logger.info("Successfully clicked on Proceed To Checkout button.")
+            time.sleep(2)
+
+    def verify_billing_address(self, address_to_verify):
+
+        billing_address = self.driver.find_element(*self.billing_address_element)
+        assert address_to_verify in billing_address.text, "Expected and Actual billing address did not match."
+        logger.info("Successfully verified billing address.")
+        time.sleep(1)
+
+
+    def go_to_contact_us(self):
+        return ContactUs(self.driver)

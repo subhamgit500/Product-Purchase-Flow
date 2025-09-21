@@ -48,12 +48,12 @@ Fill out the contact form (name, email, subject, message).
 Upload a file (use Selenium file upload).
 Submit and verify success message.
 
-Part 6 – Misc Selenium Features
+Part 6 – Payment and place order
 
-Perform mouse hover on a menu (Actions class).
-Execute JavaScript to highlight an element.
-Handle alert box (if any).
-Open a new tab (using JS or Ctrl+T) and switch back.
+Click on Place order
+Enter card details and place order
+Verify the order placement
+Click on Continue button
 
 Part 7 – Logout
 

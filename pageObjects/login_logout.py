@@ -8,14 +8,17 @@ logger = logging.getLogger(__name__)
 
 class LoginPage:
 
+    signUploginButton = (By.CSS_SELECTOR, "a[href='/login']")
+    email = (By.XPATH, "(//input[@name='email'])[1]")
+    password = (By.CSS_SELECTOR, "input[name='password']")
+    loginButton = (By.XPATH, "//button[text()='Login']")
+    loggedIn = (By.XPATH, "//div[@class='shop-menu pull-right']/ul/li[10]/a")
+    logoutButton = (By.XPATH, "//div[@class='shop-menu pull-right']/ul/li[4]/a")
+
+
     def __init__(self,driver): #pass only driver to the constructor
         self.driver = driver
-        self.signUploginButton = (By.CSS_SELECTOR,"a[href='/login']")
-        self.email = (By.XPATH,"(//input[@name='email'])[1]")
-        self.password = (By.CSS_SELECTOR,"input[name='password']")
-        self.loginButton = (By.XPATH,"//button[text()='Login']")
-        self.loggedIn = (By.XPATH,"//div[@class='shop-menu pull-right']/ul/li[10]/a")
-        self.logoutButton = (By.XPATH,"//div[@class='shop-menu pull-right']/ul/li[4]/a")
+
 
     def verify_homepage_title_and_URL(self):
 

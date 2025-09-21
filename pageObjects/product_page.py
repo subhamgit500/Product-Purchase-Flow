@@ -10,11 +10,14 @@ from pageObjects.cart_page import CartPage
 logger = logging.getLogger(__name__)
 
 class ProductPage:
+
+    product_btn = (By.XPATH, "//div[starts-with(@class,'shop-menu')]/ul/li[2]")
+    search_bar = (By.CSS_SELECTOR, "#search_product")
+    search_btn = (By.CSS_SELECTOR, "#submit_search")
+
     def __init__(self,driver):  #pass only driver to the constructor
         self.driver = driver
-        self.product_btn = (By.XPATH, "//div[starts-with(@class,'shop-menu')]/ul/li[2]")
-        self.search_bar = (By.CSS_SELECTOR, "#search_product")
-        self.search_btn = (By.CSS_SELECTOR, "#submit_search")
+
 
 
     def search_and_view_product(self,str_search, str_category, str_product_category):

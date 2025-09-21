@@ -47,9 +47,24 @@ def test_purchaseFlow(browserInstance,test_data_item):
     logger.info("\nStep 5: Add product to cart\n")
     cart_page = product_page.go_to_cart_page()
     cart_page.add_to_cart_and_verify()
-    cart_page.remove_product_and_readd(test_data_item["product_quantity"])
+    cart_page.remove_product_and_re_add(test_data_item["product_quantity"])
     cart_page.add_to_cart_and_verify()  # again after removing and updating quantity
+    cart_page.click_proceed_to_checkout()
+    cart_page.verify_billing_address(test_data_item["billing_address"])
+
+    # Part 5 – Form Handling
+    logger.info("\nStep 6: Contact us\n")
+    contact_us = cart_page.go_to_contact_us()
+    contact_us.submit_feedback()
+    contact_us.click_cart_and_checkout()
+
+    # Part 6 – Payment and place order
+    logger.info("\nStep 7: Payment and place order\n")
+    place_order = contact_us.go_to_place_order()
+    place_order.payment()
 
     # Part 7 – Logout
-    logger.info("\nStep 5: Perform Logout\n")
+    logger.info("\nStep 8: Perform Logout\n")
     login_logout.logout()
+
+    #To Run - python -m pytest --capture=tee-sys --log-cli-level=INFO --html=report.html
